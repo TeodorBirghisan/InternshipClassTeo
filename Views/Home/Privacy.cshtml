@@ -1,6 +1,26 @@
 @{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Internship";
 }
-<h1>@ViewData["Title"]</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Internship Landpage</title>
+</head>
+<body>
+    <div>
+        <h1>@ViewData["Title"]</h1>
+        <p>This is our classroom.</p>
+        <ul id="list">
+            <li>Bogdan</li>
+            <li>Teodor</li>
+            <li>Peter</li>
+        </ul>
+    </div>
 
-<p>Use this page to detail your site's privacy policy.</p>
+    <input id="newcomer" title="Name" type="text" />
+    <button id="add">Add new commer</button>
+    <p><img src="/Images/Rules.jpg" width="200px" /></p>
+    <script src="~/js/addNewcomer.js"></script>
+</body>
+</html>
