@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using InternshipClass.Models;
@@ -11,10 +7,12 @@ namespace InternshipClass.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly InternshipClassList _internshipClass; 
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
         {
+            _internshipClass = new InternshipClassList();
             _logger = logger;
         }
 
@@ -25,7 +23,7 @@ namespace InternshipClass.Controllers
 
         public IActionResult Privacy()
         {
-            return View();
+            return View(_internshipClass);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
