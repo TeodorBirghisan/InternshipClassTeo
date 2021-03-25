@@ -20,4 +20,19 @@ $(document).ready(function () {
     $("#clear").click(function () {
         $("#newcomer").val("");
     })
+
+    $("#delete").click(function () {
+        var id = $(this).attr('memberID');
+        console.log('CLICK',id);
+        $.ajax({
+            url: `/Home/RemoveMember/${id}`,
+            type: 'DELETE',
+            success: function (data) {
+                $("#member").remove();
+            },
+            error: function (data) {
+                alert(`Failed to delete ${id}`);
+            }
+        })
+    })
 });
