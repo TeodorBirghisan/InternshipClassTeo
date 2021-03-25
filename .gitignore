@@ -447,4 +447,7 @@ $RECYCLE.BIN/
 !.vscode/launch.json
 !.vscode/extensions.json
 
-/InternshipClass.sln
+/LandPage2.xml
+*.orig
+/out
+/RazorMvc.xml
