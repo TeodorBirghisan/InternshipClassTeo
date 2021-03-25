@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using InternshipClass.Models;
+using InternshipClass.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -7,13 +8,13 @@ namespace InternshipClass.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly InternshipClassList _internshipClass;
         private readonly ILogger<HomeController> _logger;
+        private readonly InternshipService internshipService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, InternshipService internshipService)
         {
-            _internshipClass = new InternshipClassList();
             _logger = logger;
+            this.internshipService = internshipService;
         }
 
         public IActionResult Index()
@@ -23,20 +24,19 @@ namespace InternshipClass.Controllers
 
         public IActionResult Privacy()
         {
-            return View(_internshipClass);
+            return View(internshipService.GetClass());
         }
 
         [HttpDelete]
         public void RemoveMember(int index)
         {
-            _internshipClass.Members.RemoveAt(index);
+            internshipService.RemoveMember(index);
         }
 
         [HttpGet]
         public string AddMember(string member)
         {
-            _internshipClass.Members.Add(member);
-            return member;
+            return internshipService.AddMember(member);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
