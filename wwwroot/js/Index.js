@@ -21,14 +21,14 @@ $(document).ready(function () {
         $("#newcomer").val("");
     })
 
-    $("#delete").click(function () {
+    $(".delete").click(function () {
         var id = $(this).attr('memberID');
         console.log('CLICK',id);
         $.ajax({
             url: `/Home/RemoveMember/${id}`,
             type: 'DELETE',
-            success: function (data) {
-                $("#member").remove();
+            success: function () {
+                $(".member").eq(id).remove();
             },
             error: function (data) {
                 alert(`Failed to delete ${id}`);
