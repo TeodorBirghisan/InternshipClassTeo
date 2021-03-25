@@ -8,5 +8,9 @@ $(document).ready(function () {
         $("#list").append(`<li>${newcomerName}</li>`);
 
         $("#newcomer").val("");
+
+        $("#clear").click(function () {
+            $("#newcomer").val("");
+        })
     })
 });
