@@ -3,11 +3,13 @@ $(document).ready(function () {
     // see https://api.jquery.com/click/
     $("#add").click(function () {
         var newcomerName = $("#newcomer").val();
+
+        // Remember string interpolation
         $.ajax({
             url: `/Home/AddMember?member=${newcomerName}`,
             success: function (data) {
                 // Remember string interpolation
-                $("#list").append(`<li>${data}</li>`);
+                $("#list").append(`<li>${data}<span class="fa fa-pencil"></span><i class="fa fa-remove remove"></i></li>`);
 
                 $("#newcomer").val("");
             },
@@ -15,24 +17,31 @@ $(document).ready(function () {
                 alert(`Failed to add ${newcomerName}`);
             },
         });
+
     })
 
     $("#clear").click(function () {
         $("#newcomer").val("");
     })
 
-    $(".delete").click(function () {
-        var id = $(this).attr('memberID');
-        console.log('CLICK',id);
+    $("#list").on("click", ".remove", function () {
+
+        var $li = $(this).parent('li');
+        var index = $li.index();
+
+        console.log(`index=${index}`);
+        console.log(`$li=${$li}`);
+
         $.ajax({
-            url: `/Home/RemoveMember/${id}`,
-            type: 'DELETE',
+            method: "DELETE",
+            url: `/Home/RemoveMember?index=${index}`,
             success: function () {
-                $(".member").eq(id).remove();
+
+                $li.remove();
             },
             error: function (data) {
-                alert(`Failed to delete ${id}`);
-            }
-        })
+                alert(`Failed to remove`);
+            },
+        });
     })
 });
