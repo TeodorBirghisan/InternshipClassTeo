@@ -9,7 +9,7 @@ $(document).ready(function () {
             url: `/Home/AddMember?member=${newcomerName}`,
             success: function (data) {
                 // Remember string interpolation
-                $("#list").append(`<li>${data}<span class="fa fa-pencil"><span class="name">${data}</span><span class="delete fa fa-remove"></span><i class="startEdit fa fa-pencil" data-toggle="modal" data-target="#editClassmate"></i></li>`);
+                $("#list").append(`<li>${data}<span class="name"></span><span class="delete fa fa-remove"></span><i class="startEdit fa fa-pencil" data-toggle="modal" data-target="#editClassmate"></i></li>`);
 
                 $("#newcomer").val("");
             },
@@ -47,17 +47,30 @@ $(document).ready(function () {
 
     $("#list").on("click", ".startEdit", function () {
         var targetMemberTag = $(this).closest('li');
-        var index = targetMemberTag.index(targetMemberTag.parent());
+        var index = targetMemberTag.index();
         var currentName = targetMemberTag.find(".name").text();
         $('#editClassmate').attr("memberIndex", index);
         $('#classmateName').val(currentName);
     })
 
     $("#editClassmate").on("click", "#submit", function () {
+        var newName = $('#classmateName').val();
+        var index = $('#editClassmate').attr("memberIndex");
         console.log('submit changes to server');
+        $.ajax({
+            url: `/Home/UpdateMember?index=${index}&member=${newName}`,
+            type: 'PUT',
+            success: function () {
+                console.log(newName);
+            },
+            error: function (data) {
+                alert(`Failed to remove`);
+            },
+        });
     })
 
     $("#editClassmate").on("click", "#cancel", function () {
         console.log('cancel changes');
     })
+
 });

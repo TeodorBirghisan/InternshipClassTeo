@@ -39,6 +39,12 @@ namespace InternshipClass.Controllers
             return internshipService.AddMember(member);
         }
 
+        [HttpPut]
+        public void UpdateMember(int index, string member)
+        {
+            internshipService.UpdateMember(index, member);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
