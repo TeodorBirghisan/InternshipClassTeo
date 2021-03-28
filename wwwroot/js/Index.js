@@ -9,7 +9,8 @@ $(document).ready(function () {
             url: `/Home/AddMember?member=${newcomerName}`,
             success: function (data) {
                 // Remember string interpolation
-                $("#list").append(`<li>${data}<span class="name"></span><span class="delete fa fa-remove"></span><i class="startEdit fa fa-pencil" data-toggle="modal" data-target="#editClassmate"></i></li>`);
+                $("#list").append(`<li class="member"><span class="name">${data}</span><span class="remove fa fa-remove"></span><i class="startEdit fa fa-pencil" data-toggle="modal" data-target="#editClassmate"></i>
+		        </li>`);
 
                 $("#newcomer").val("");
             },
@@ -35,9 +36,10 @@ $(document).ready(function () {
         $.ajax({
             method: "DELETE",
             url: `/Home/RemoveMember?index=${index}`,
-            success: function () {
+            success: function (data) {
 
                 $li.remove();
+
             },
             error: function (data) {
                 alert(`Failed to remove`);
@@ -60,8 +62,8 @@ $(document).ready(function () {
         $.ajax({
             url: `/Home/UpdateMember?index=${index}&member=${newName}`,
             type: 'PUT',
-            success: function () {
-                console.log(newName);
+            success: function (response) {
+                $('.name').get(index).replaceWith(newName);
             },
             error: function (data) {
                 alert(`Failed to remove`);
