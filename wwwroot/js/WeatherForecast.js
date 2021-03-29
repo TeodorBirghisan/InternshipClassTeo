@@ -3,9 +3,8 @@
         url: '/WeatherForecast',
         success: function (data) {
             let tommorrow = data[0];
-            console.log(tommorrow);
-            let date = new Date(tommorrow.date);
-            $('#date').text(date.toDateString());
+            let date = new Date(tommorrow.date).toDateString();
+            $('#date').text(date);
             $('#temperature').text(tommorrow.temperatureC + ' C');
             $('#summary').text(tommorrow.summary);
         },
