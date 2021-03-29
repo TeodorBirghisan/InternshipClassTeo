@@ -3,6 +3,7 @@
 }
 @section scripts {
     <script type="text/javascript" src="~/js/Index.js"></script>
+    <script type="text/javascript" src="~/js/WeatherForecast.js"></script>
 }
 
 @section styles {
@@ -61,7 +62,7 @@
             }
         </ul>
     </div>
-
+ 
     <input id="newcomer" title="Name" type="text" />
     <button id="add" class="btn btn-primary">
         <i class="fa fa-plus-circle"></i>
@@ -72,5 +73,11 @@
         Clear
     </button>
     <p><img src="/Images/Rules.jpg" width="200" /></p>
+
+    <div class="weather">
+        <p>Date: <div id="date">29/03/21</div></p>
+        <p>Temperature: <div id="temperature">12 C</div></p>
+        <p>Summary: <div id="summary">cool</div></p>
+    </div>
 </body>
 </html>
