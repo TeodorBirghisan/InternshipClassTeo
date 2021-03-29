@@ -6,7 +6,7 @@
     <members>
         <member name="M:InternshipClass.WebAPI.Controllers.WeatherForecastController.Get">
             <summary>
-            Getting Weather Forecast for fove days.
+            Getting Weather Forecast for five days.
             </summary>
             <returns>Enumerablie of weather forecast objects.</returns>
         </member>
