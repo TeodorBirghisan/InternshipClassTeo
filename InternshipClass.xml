@@ -4,5 +4,11 @@
         <name>InternshipClass</name>
     </assembly>
     <members>
+        <member name="M:InternshipClass.WebAPI.Controllers.WeatherForecastController.Get">
+            <summary>
+            Getting Weather Forecast for fove days.
+            </summary>
+            <returns>Enumerablie of weather forecast objects.</returns>
+        </member>
     </members>
 </doc>
