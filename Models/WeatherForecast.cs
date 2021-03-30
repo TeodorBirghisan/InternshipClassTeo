@@ -9,5 +9,8 @@ namespace InternshipClass.WebAPI
         public int TemperatureC { get; set; }
 
         public string Summary { get; set; }
+        
+        public double TemperatureK { get; set; }
+        //return TemperatureC + 273.15;
     }
 }
