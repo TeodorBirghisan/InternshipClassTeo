@@ -6,7 +6,7 @@
                 let tommorrow = data[0];
                 let date = new Date(tommorrow.date).toDateString();
                 $('#date').text(date);
-                $('#temperature').text(tommorrow.temperatureC + ' C');
+                $('#temperature').text(tommorrow.temperatureK + ' K');
                 $('#summary').text(tommorrow.summary);
             },
             error: function (data) {
