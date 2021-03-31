@@ -57,7 +57,7 @@ namespace InternshipClass.Tests
 
             //Assert
             //Forecast is volatile so make sure to change the value accordingly
-            Assert.Equal(284.07, weatherForecastForTommorrow.TemperatureK);
+            Assert.Equal(285.39, weatherForecastForTommorrow.TemperatureK);
         }
     }
 }
