@@ -12,6 +12,8 @@ using InternshipClass.Services;
 using Microsoft.OpenApi.Models;
 using System.IO;
 using System.Reflection;
+using InternshipClass.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace InternshipClass
 {
@@ -27,6 +29,10 @@ namespace InternshipClass
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
             services.AddControllersWithViews();
             services.AddSingleton(typeof(InternshipService));
             services.AddSwaggerGen(c =>
@@ -46,6 +52,7 @@ namespace InternshipClass
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseMigrationsEndPoint();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "InternshipClass.WebAPI v1"));
 
