@@ -49,10 +49,9 @@ namespace InternshipClass.Tests
 
         [Fact]
         public void ConvertWeatherJsonToWeatherForecast()
-        {
+        {      
             //Asume
-            //https://api.openweathermap.org/data/2.5/onecall?lat=45.75&lon=25.3333&exclude=hourly,minutely&appid=16ad7f7f931f63b0e8a7a494f7095d2c
-            string content = File.ReadAllText(@"C:\Projects\InternshipClass\InternshipClass.Tests\WeatherForecast.json");
+            string content = GetStreamLines();
             WeatherForecastController weatherForecastController = InstantiateWeatherForecastController();
 
             //Act
@@ -62,6 +61,23 @@ namespace InternshipClass.Tests
             //Assert
             //Forecast is volatile so make sure to change the value accordingly
             Assert.Equal(285.39, weatherForecastForTommorrow.TemperatureK);
+        }
+
+        private string GetStreamLines()
+        {
+            var assembly = this.GetType().Assembly;
+            var stream = assembly.GetManifestResourceStream("InternshipClass.Tests.WeatherForecast.json");
+            StreamReader streamReader = new StreamReader(stream);
+
+            var streamReaderLines = "";
+
+            while (!streamReader.EndOfStream)
+            {
+                streamReaderLines += streamReader.ReadLine();
+            }
+
+            streamReader.Close();
+            return streamReaderLines;
         }
 
         private WeatherForecastController InstantiateWeatherForecastController()
