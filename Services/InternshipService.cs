@@ -1,4 +1,6 @@
-﻿using InternshipClass.Models;
+﻿using InternshipClass.Data;
+using InternshipClass.Models;
+using System.Collections.Generic;
 
 namespace InternshipClass.Services
 {

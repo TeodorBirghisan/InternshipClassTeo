@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using InternshipClass.Data;
 using InternshipClass.Models;
 using InternshipClass.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -10,16 +11,19 @@ namespace InternshipClass.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly InternshipService internshipService;
+        private readonly InternDbContext db;
 
-        public HomeController(ILogger<HomeController> logger, InternshipService internshipService)
+        public HomeController(ILogger<HomeController> logger, InternshipService internshipService, InternDbContext db)
         {
             _logger = logger;
             this.internshipService = internshipService;
+            this.db = db;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var interns = db.Interns;
+            return View(interns);
         }
 
         public IActionResult Privacy()
