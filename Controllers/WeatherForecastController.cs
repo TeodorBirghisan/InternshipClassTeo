@@ -18,7 +18,7 @@ namespace InternshipClass.WebAPI.Controllers
     {
         private static readonly string[] Summaries = new[]
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching",
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
@@ -34,7 +34,6 @@ namespace InternshipClass.WebAPI.Controllers
         /// Getting Weather Forecast for five days.
         /// </summary>
         /// <returns>Enumerablie of weather forecast objects.</returns>
-
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
