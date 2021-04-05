@@ -1,33 +1,36 @@
-﻿using InternshipClass.Data;
-using InternshipClass.Models;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using InternshipClass.Models;
 
 namespace InternshipClass.Services
 {
-    public class InternshipService
+    public class InternshipService : IInternshipService
     {
-        private readonly InternshipClassList _internshipClassList = new InternshipClassList();
 
-        public void RemoveMember(int index)
+        private readonly InternshipClassList _internshipClass = new ();
+
+        public void RemoveMember(int id)
         {
-            _internshipClassList.Members.RemoveAt(index);
+            var itemToBeDeleted = _internshipClass.Members.Single(_ => _.Id == id);
+            _internshipClass.Members.Remove(itemToBeDeleted);
         }
 
-        public string AddMember(string member)
+        public Intern AddMember(Intern member)
         {
-            _internshipClassList.Members.Add(member);
+            _internshipClass.Members.Add(member);
             return member;
         }
 
-        internal void UpdateMember(int index, string name)
+        public void UpdateMember(Intern intern)
         {
-            _internshipClassList.Members[index] = name;
+            var itemToBeUpdated = _internshipClass.Members.Single(_ => _.Id == intern.Id);
+            itemToBeUpdated.Name = intern.Name;
         }
 
-        public InternshipClassList GetClass()
+        public IList<Intern> GetMembers()
         {
-            return _internshipClassList;
+            return _internshipClass.Members;
         }
-
     }
 }

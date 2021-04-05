@@ -1,5 +1,7 @@
 using Xunit;
 using InternshipClass.Services;
+using System.Linq;
+using InternshipClass.Models;
 
 namespace InternshipClass.Tests
 {
@@ -14,7 +16,7 @@ namespace InternshipClass.Tests
             // Act
 
             // Assert
-            Assert.Equal(3, intershipService.GetClass().Members.Count);
+            Assert.Equal(3, intershipService.GetMembers().Count);
         }
 
         [Fact]
@@ -22,13 +24,15 @@ namespace InternshipClass.Tests
         {
             // Assume
             var intershipService = new InternshipService();
+            Intern intern = new Intern();
+            intern.Name = "Marko";
 
             // Act
-            intershipService.AddMember("Marko");
+            intershipService.AddMember(intern);
 
             // Assert
-            Assert.Equal(4, intershipService.GetClass().Members.Count);
-            Assert.Contains("Marko", intershipService.GetClass().Members);
+            Assert.Equal(4, intershipService.GetMembers().Count);
+            Assert.Contains("Marko", intershipService.GetMembers().Select(member => member.Name));
         }
     }
 }

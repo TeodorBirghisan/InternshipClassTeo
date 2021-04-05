@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using InternshipClass.Data;
 using InternshipClass.Models;
 using InternshipClass.Services;
@@ -10,43 +12,49 @@ namespace InternshipClass.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly InternshipService internshipService;
-        private readonly InternDbContext db;
+        private readonly IInternshipService intershipService;
 
-        public HomeController(ILogger<HomeController> logger, InternshipService internshipService, InternDbContext db)
+        public HomeController(ILogger<HomeController> logger, IInternshipService intershipService)
         {
+            this.intershipService = intershipService;
             _logger = logger;
-            this.internshipService = internshipService;
-            this.db = db;
-        }
-
-        public IActionResult Index()
-        {
-            var interns = db.Interns;
-            return View(interns);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View(internshipService.GetClass());
         }
 
         [HttpDelete]
         public void RemoveMember(int index)
         {
-            internshipService.RemoveMember(index);
+            intershipService.RemoveMember(index);
         }
 
         [HttpGet]
-        public string AddMember(string member)
+        public Intern AddMember(string memberName)
         {
-            return internshipService.AddMember(member);
+            Intern intern = new Intern();
+            intern.Name = memberName;
+            intern.RegistrationDateTime = DateTime.Now;
+            return intershipService.AddMember(intern);
         }
 
         [HttpPut]
-        public void UpdateMember(int index, string member)
+        public void UpdateMember(int index, string memberName)
         {
-            internshipService.UpdateMember(index, member);
+            Intern intern = new Intern();
+            intern.Id = index;
+            intern.Name = memberName;
+            intern.RegistrationDateTime = DateTime.Now;
+            intershipService.UpdateMember(intern);
+        }
+
+
+        public IActionResult Index()
+        {
+            var interns = intershipService.GetMembers();
+            return View(interns);
+        }
+
+        public IActionResult Privacy()
+        {
+            return View(intershipService.GetMembers());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
