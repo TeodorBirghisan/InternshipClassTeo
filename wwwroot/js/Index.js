@@ -6,10 +6,10 @@ $(document).ready(function () {
 
         // Remember string interpolation
         $.ajax({
-            url: `/Home/AddMember?member=${newcomerName}`,
+            url: `/Home/AddMember?memberName=${newcomerName}`,
             success: function (data) {
                 // Remember string interpolation
-                $("#list").append(`<li class="member"><span class="name">${data}</span><span class="remove fa fa-remove"></span><i class="startEdit fa fa-pencil" data-toggle="modal" data-target="#editClassmate"></i>
+                $("#list").append(`<li class="member"><span class="name">${newcomerName}</span><span class="remove fa fa-remove"></span><i class="startEdit fa fa-pencil" data-toggle="modal" data-target="#editClassmate"></i>
 		        </li>`);
 
                 $("#newcomer").val("");
@@ -25,17 +25,14 @@ $(document).ready(function () {
         $("#newcomer").val("");
     })
 
-    $("#list").on("click", ".remove", function () {
+    $("#list").on("click", ".delete", function () {
 
         var $li = $(this).closest('li');
-        var index = $li.index();
-
-        console.log(`index=${index}`);
-        console.log(`$li=${$li}`);
+        var id = $li.attr('member-id');
 
         $.ajax({
             method: "DELETE",
-            url: `/Home/RemoveMember?index=${index}`,
+            url: `/Home/RemoveMember?index=${id}`,
             success: function (data) {
 
                 $li.remove();
@@ -49,24 +46,23 @@ $(document).ready(function () {
 
     $("#list").on("click", ".startEdit", function () {
         var targetMemberTag = $(this).closest('li');
-        var index = targetMemberTag.index();
+        var id = targetMemberTag.attr('member-id');
         var currentName = targetMemberTag.find(".name").text();
-        $('#editClassmate').attr("memberIndex", index);
+        $('#editClassmate').attr("member-id", id);
         $('#classmateName').val(currentName);
     })
 
     $("#editClassmate").on("click", "#submit", function () {
         var newName = $('#classmateName').val();
-        var index = $('#editClassmate').attr("memberIndex");
-        console.log('submit changes to server');
+        var index = $('#editClassmate').attr("member-id");
         $.ajax({
-            url: `/Home/UpdateMember?index=${index}&member=${newName}`,
+            url: `/Home/UpdateMember?index=${index}&memberName=${newName}`,
             type: 'PUT',
             success: function (response) {
                 $('.name').get(index).replaceWith(newName);
             },
             error: function (data) {
-                alert(`Failed to remove`);
+                alert(`Failed to update`);
             },
         });
     })
