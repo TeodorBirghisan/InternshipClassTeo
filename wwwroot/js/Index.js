@@ -47,19 +47,22 @@ $(document).ready(function () {
     $("#list").on("click", ".startEdit", function () {
         var targetMemberTag = $(this).closest('li');
         var id = targetMemberTag.attr('member-id');
+        var nameIndex = targetMemberTag.index();
         var currentName = targetMemberTag.find(".name").text();
         $('#editClassmate').attr("member-id", id);
+        $('#editClassmate').attr("nameIndex", nameIndex);
         $('#classmateName').val(currentName);
     })
 
     $("#editClassmate").on("click", "#submit", function () {
         var newName = $('#classmateName').val();
         var index = $('#editClassmate').attr("member-id");
+        var nameIndex = $('#editClassmate').attr("nameIndex");
         $.ajax({
             url: `/Home/UpdateMember?index=${index}&memberName=${newName}`,
             type: 'PUT',
             success: function (response) {
-                $('.name').get(index).replaceWith(newName);
+                $('.name').eq(nameIndex).replaceWith(newName);
             },
             error: function (data) {
                 alert(`Failed to update`);
