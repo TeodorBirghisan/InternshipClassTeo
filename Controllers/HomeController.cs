@@ -13,11 +13,13 @@ namespace InternshipClass.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IInternshipService intershipService;
+        private readonly MessageService messageService;
 
-        public HomeController(ILogger<HomeController> logger, IInternshipService intershipService)
+        public HomeController(ILogger<HomeController> logger, IInternshipService intershipService, MessageService messageService)
         {
             this.intershipService = intershipService;
             _logger = logger;
+            this.messageService = messageService;
         }
 
         [HttpDelete]
@@ -54,7 +56,7 @@ namespace InternshipClass.Controllers
 
         public IActionResult Chat()
         {
-            return View();
+            return View(messageService.GetAllMessages());
         }
 
         public IActionResult Privacy()
