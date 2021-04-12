@@ -45,9 +45,9 @@ namespace InternshipClass.Services
             db.SaveChanges();
         }
 
-        public void SubscribeToAddMember(IAddMemberSubscriber messageHub)
+        public void SubscribeToAddMember(IAddMemberSubscriber subscribers)
         {
-            throw new NotImplementedException();
+            this.subscribers.Add(subscribers);
         }
     }
 }
