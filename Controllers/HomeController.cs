@@ -52,6 +52,11 @@ namespace InternshipClass.Controllers
             return View(interns);
         }
 
+        public IActionResult Chat()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View(intershipService.GetMembers());
