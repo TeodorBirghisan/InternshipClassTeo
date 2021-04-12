@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using InternshipClass.Hubs;
 using InternshipClass.Models;
 
 namespace InternshipClass.Services
@@ -12,5 +13,7 @@ namespace InternshipClass.Services
         IList<Intern> GetMembers();
 
         void RemoveMember(int index);
+
+        void SubscribeToAddMember(IAddMemberSubscriber messageHub);
     }
 }

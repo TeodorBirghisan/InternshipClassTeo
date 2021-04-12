@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using InternshipClass.Hubs;
 using InternshipClass.Models;
 
 namespace InternshipClass.Services
@@ -9,6 +10,7 @@ namespace InternshipClass.Services
     {
 
         private readonly InternshipClassList _internshipClass = new ();
+        private readonly List<IAddMemberSubscriber> subscribers;
 
         public void RemoveMember(int id)
         {
@@ -19,6 +21,7 @@ namespace InternshipClass.Services
         public Intern AddMember(Intern member)
         {
             _internshipClass.Members.Add(member);
+            subscribers.ForEach(subscriber => subscriber.OnAddMember(member));
             return member;
         }
 
@@ -31,6 +34,11 @@ namespace InternshipClass.Services
         public IList<Intern> GetMembers()
         {
             return _internshipClass.Members;
+        }
+
+        public void SubscribeToAddMember(IAddMemberSubscriber messageHub)
+        {
+            this.subscribers.Add(messageHub);
         }
     }
 }
