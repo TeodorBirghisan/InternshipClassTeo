@@ -28,7 +28,15 @@ namespace InternshipClass.Services
 
         public void UpdateMember(Intern intern)
         {
-            db.Interns.Update(intern);
+            var itemToBeUpdated = GetMemberById(intern.Id);
+            itemToBeUpdated.Name = intern.Name;
+
+            if (intern.RegistrationDateTime > DateTime.MinValue)
+            {
+                itemToBeUpdated.RegistrationDateTime = DateTime.Now;
+            }
+
+            db.Interns.Update(itemToBeUpdated);
             db.SaveChanges();
         }
 

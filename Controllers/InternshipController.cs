@@ -52,6 +52,7 @@ namespace InternshipClass.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] Intern intern)
         {
+            
             intern.Id = id;
             intershipService.UpdateMember(intern);
         }
