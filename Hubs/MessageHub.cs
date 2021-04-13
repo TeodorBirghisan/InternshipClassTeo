@@ -8,21 +8,13 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace InternshipClass.Hubs
 {
-    public class MessageHub : Hub, IAddMemberSubscriber
+    public class MessageHub : Hub
     {
         private readonly MessageService messageService;
-        private readonly IInternshipService internshipService;
 
-        public MessageHub(MessageService messageService, IInternshipService internshipService)
+        public MessageHub(MessageService messageService)
         {
             this.messageService = messageService;
-            this.internshipService = internshipService;
-            internshipService.SubscribeToAddMember(this);
-        }
-
-        public async void OnAddMember(Intern member)
-        {
-            await Clients.All.SendAsync("AddMemeber", member.Name, member.Id);
         }
 
         public async Task SendMessage(string user, string message)
