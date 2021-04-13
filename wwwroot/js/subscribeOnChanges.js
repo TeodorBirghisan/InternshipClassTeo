@@ -2,7 +2,7 @@
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/messagehub").build();
 
-connection.on("AddMemeber", function (name, id) {
+connection.on("AddMember", function (name, id) {
     $("#list").append(`<li class="member">
         <span class="name">${name}</span><span class="delete fa fa-remove"></span><i class="startEdit fa fa-pencil" data-toggle="modal" data-target="#editClassmate"></i>
     </li>`);
