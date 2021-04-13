@@ -2,9 +2,11 @@
 using System.Diagnostics;
 using System.Linq;
 using InternshipClass.Data;
+using InternshipClass.Hubs;
 using InternshipClass.Models;
 using InternshipClass.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 
 namespace InternshipClass.Controllers
@@ -14,11 +16,13 @@ namespace InternshipClass.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IInternshipService intershipService;
         private readonly MessageService messageService;
+        private readonly IHubContext<MessageHub> hubContext;
 
-        public HomeController(ILogger<HomeController> logger, IInternshipService intershipService, MessageService messageService)
+        public HomeController(ILogger<HomeController> logger, IInternshipService intershipService, IHubContext<MessageHub> hubContext, MessageService messageService)
         {
             this.intershipService = intershipService;
             _logger = logger;
+            this.hubContext = hubContext;
             this.messageService = messageService;
         }
 
@@ -34,7 +38,9 @@ namespace InternshipClass.Controllers
             Intern intern = new Intern();
             intern.Name = memberName;
             intern.RegistrationDateTime = DateTime.Now;
-            return intershipService.AddMember(intern);
+            var newMember = intershipService.AddMember(intern);
+            hubContext.Clients.All.SendAsync("AddMember", newMember.Name, newMember.Id);
+            return newMember;
         }
 
         [HttpPut]
