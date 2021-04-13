@@ -52,8 +52,13 @@ namespace InternshipClass.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] Intern intern)
         {
-            
             intern.Id = id;
+
+            if (intern.RegistrationDateTime == DateTime.MinValue)
+            {
+                intern.RegistrationDateTime = DateTime.Now;
+            }
+
             intershipService.UpdateMember(intern);
         }
 
