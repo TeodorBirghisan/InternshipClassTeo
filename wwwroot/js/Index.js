@@ -6,7 +6,10 @@ $(document).ready(function () {
 
         // Remember string interpolation
         $.ajax({
-            url: `/Home/AddMember?memberName=${newcomerName}`,
+            contentType: 'application/json',
+            data: JSON.stringify({ "Name": `${newcomerName}` }),
+            method: "POST",
+            url: 'api/Internship/',
             success: function (data) {
                 $("#newcomer").val("");
             },
@@ -28,11 +31,9 @@ $(document).ready(function () {
 
         $.ajax({
             method: "DELETE",
-            url: `/Home/RemoveMember?index=${id}`,
+            url: `api/Internship/${id}`,
             success: function (data) {
-
                 $li.remove();
-
             },
             error: function (data) {
                 alert(`Failed to remove`);
@@ -55,8 +56,10 @@ $(document).ready(function () {
         var index = $('#editClassmate').attr("member-id");
         var nameIndex = $('#editClassmate').attr("nameIndex");
         $.ajax({
-            url: `/Home/UpdateMember?index=${index}&memberName=${newName}`,
-            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify({ "Name": `${newName}` }),
+            method: "PUT",
+            url: `api/Internship/${index}`,
             success: function (response) {
                 $('.name').eq(nameIndex).replaceWith(newName);
             },
