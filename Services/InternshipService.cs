@@ -13,7 +13,7 @@ namespace InternshipClass.Services
 
         public void RemoveMember(int id)
         {
-            var itemToBeDeleted = _internshipClass.Members.Single(_ => _.Id == id);
+            var itemToBeDeleted = GetMemberById(id);
             _internshipClass.Members.Remove(itemToBeDeleted);
         }
 
@@ -25,7 +25,7 @@ namespace InternshipClass.Services
 
         public void UpdateMember(Intern intern)
         {
-            var itemToBeUpdated = _internshipClass.Members.Single(_ => _.Id == intern.Id);
+            var itemToBeUpdated = GetMemberById(intern.Id);
             itemToBeUpdated.Name = intern.Name;
         }
 
@@ -34,9 +34,10 @@ namespace InternshipClass.Services
             return _internshipClass.Members;
         }
 
-        public void SubscribeToAddMember(IAddMemberSubscriber messageHub)
+        public Intern GetMemberById(int id)
         {
-            throw new NotImplementedException();
+            var member = _internshipClass.Members.Single(_ => _.Id == id);
+            return member;
         }
     }
 }

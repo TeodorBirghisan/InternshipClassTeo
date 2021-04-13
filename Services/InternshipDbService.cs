@@ -40,14 +40,14 @@ namespace InternshipClass.Services
 
         public void RemoveMember(int id)
         {
-            var intern = db.Find<Intern>(id);
+            var intern = GetMemberById(id);
             db.Remove<Intern>(intern);
             db.SaveChanges();
         }
 
-        public void SubscribeToAddMember(IAddMemberSubscriber subscribers)
+        public Intern GetMemberById(int id)
         {
-            this.subscribers.Add(subscribers);
+            return db.Find<Intern>(id);
         }
     }
 }
