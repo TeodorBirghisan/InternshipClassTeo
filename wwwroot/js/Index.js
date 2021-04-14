@@ -53,14 +53,12 @@ $(document).ready(function () {
     $("#editClassmate").on("click", "#submit", function () {
         var newName = $('#classmateName').val();
         var index = $('#editClassmate').attr("member-id");
-        var nameIndex = $('#editClassmate').attr("nameIndex");
         $.ajax({
             contentType: 'application/json',
             data: JSON.stringify({ "Name": `${newName}` }),
             method: "PUT",
             url: `api/Internship/${index}`,
             success: function (response) {
-                $('.name').eq(nameIndex).replaceWith(newName);
             },
             error: function (data) {
                 alert(`Failed to update`);
