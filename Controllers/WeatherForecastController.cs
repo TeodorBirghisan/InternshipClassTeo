@@ -42,6 +42,7 @@ namespace InternshipClass.WebAPI.Controllers
             return weahterForecasts.GetRange(1, 5);
         }
 
+        [HttpGet("/forecast")]
         public List<WeatherForecast> FetchWeatherForecasts()
         {
             var latitude = double.Parse(configuration["WeatherForecast:Latitude"]);
@@ -56,6 +57,7 @@ namespace InternshipClass.WebAPI.Controllers
             return ConvertResponseToWeatherForecastList(response.Content);
         }
 
+        [NonAction]
         public List<WeatherForecast> ConvertResponseToWeatherForecastList(string content)
         {
             var json = JObject.Parse(content);
