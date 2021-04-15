@@ -19,9 +19,9 @@ namespace InternshipClass.Data
 
             var interns = new Intern[]
             {
-                new Intern { Id = 1, Name = "AAAAA", RegistrationDateTime = DateTime.Parse("2021-04-01") },
-                new Intern { Id = 2, Name = "BBBBB", RegistrationDateTime = DateTime.Parse("2021-04-01") },
-                new Intern { Id = 3, Name = "CCCCC", RegistrationDateTime = DateTime.Parse("2021-03-31") },
+                new Intern { Name = "AAAAA", RegistrationDateTime = DateTime.Parse("2021-04-01") },
+                new Intern { Name = "BBBBB", RegistrationDateTime = DateTime.Parse("2021-04-01") },
+                new Intern { Name = "CCCCC", RegistrationDateTime = DateTime.Parse("2021-03-31") },
             };
 
             context.Interns.AddRange(interns);
