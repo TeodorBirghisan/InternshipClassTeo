@@ -17,22 +17,44 @@ namespace InternshipClass
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly string connectionString;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            connectionString = env.IsDevelopment() ? Configuration.GetConnectionString("DefaultConnection") : GetConnectionString();
         }
 
         public IConfiguration Configuration { get; }
+
+        public static string ConverDatabaseURLToHerokuString(string envDatabaseURL)
+        {
+            Uri url;
+            bool isUrl = Uri.TryCreate(envDatabaseURL, UriKind.Absolute, out url);
+            if (isUrl)
+            {
+                return $"Server={url.Host};Port={url.Port};Database={url.LocalPath.Substring(1)};User Id={url.UserInfo.Split(':')[0]};Password={url.UserInfo.Split(':')[1]};Pooling=true;SSL Mode=Require;Trust Server Certificate=True;";
+            }
+            else
+            {
+                throw new FormatException($"DatabaseURL cannot be converted! Check this {envDatabaseURL}. ");
+            }
+        }
+
+        private string GetConnectionString()
+        {
+            var envDatabaseURL = Environment.GetEnvironmentVariable("DATABASE_URL");
+            var herokuConnectionString = ConverDatabaseURLToHerokuString(envDatabaseURL);
+            return herokuConnectionString;
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(connectionString));
             services.AddDbContext<InternDbContext>(options =>
-                options.UseNpgsql(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(connectionString));
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
