@@ -51,7 +51,7 @@ namespace InternshipClass.Tests
         public void ConvertWeatherJsonToWeatherForecast()
         {      
             //Asume
-            string content = GetStreamLines();
+            string content = GetStreamLines("weatherForecast");
             WeatherForecastController weatherForecastController = InstantiateWeatherForecastController();
 
             //Act
@@ -63,10 +63,10 @@ namespace InternshipClass.Tests
             Assert.Equal(285.39, weatherForecastForTommorrow.TemperatureK);
         }
 
-        private string GetStreamLines()
+        private string GetStreamLines(string resourceName)
         {
             var assembly = this.GetType().Assembly;
-            using var stream = assembly.GetManifestResourceStream("InternshipClass.Tests.WeatherForecast.json");
+            using var stream = assembly.GetManifestResourceStream($"InternshipClass.Tests.{resourceName}.json");
             StreamReader streamReader = new StreamReader(stream);
 
             var streamReaderLines = "";
@@ -77,6 +77,20 @@ namespace InternshipClass.Tests
             }
 
             return streamReaderLines;
+        }
+
+        [Fact]
+        public void ShouldHandleJsonErrorFromOpenWeatherAPI()
+        {
+            // Assume
+            string content = GetStreamLines("weatherForecast_Exception");
+            WeatherForecastController weatherForecastController = InstantiateWeatherForecastController();
+
+            // Act
+
+            // Assert
+            Assert.Throws<Exception>(() => weatherForecastController.ConvertResponseToWeatherForecastList(content));
+
         }
 
         private WeatherForecastController InstantiateWeatherForecastController()
