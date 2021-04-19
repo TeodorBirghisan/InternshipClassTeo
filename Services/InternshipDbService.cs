@@ -56,6 +56,8 @@ namespace InternshipClass.Services
 
         public Intern GetMemberById(int id)
         {
+            var intern = db.Find<Intern>(id);
+            db.Entry(intern).Reference(_ => _.Location).Load();
             return db.Find<Intern>(id);
         }
     }
