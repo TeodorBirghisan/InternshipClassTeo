@@ -39,5 +39,10 @@ namespace InternshipClass.Services
             var member = _internshipClass.Members.Single(_ => _.Id == id);
             return member;
         }
+
+        public void UpdateLocation(int id, int locationId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

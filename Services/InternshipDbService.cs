@@ -80,5 +80,13 @@ namespace InternshipClass.Services
             db.Entry(intern).Reference(_ => _.Location).Load();
             return db.Find<Intern>(id);
         }
+
+        public void UpdateLocation(int id, int locationId)
+        {
+            var intern = db.Find<Intern>(id);
+            var location = db.Find<Location>(locationId);
+            intern.Location = location;
+            db.SaveChanges();
+        }
     }
 }

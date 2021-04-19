@@ -15,5 +15,6 @@ namespace InternshipClass.Services
         void RemoveMember(int index);
 
         Intern GetMemberById(int id);
+        void UpdateLocation(int id, int locationId);
     }
 }
