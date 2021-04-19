@@ -23,7 +23,8 @@ namespace InternshipClass.Data
             modelBuilder.Entity<Intern>()
                 .HasOne(_ => _.Location)
                 .WithMany(_ => _.LocalInterns)
-                .HasForeignKey("LocationId");
+                .HasForeignKey("LocationId")
+                .IsRequired();
         }
     }
 }

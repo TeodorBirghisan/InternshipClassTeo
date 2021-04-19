@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InternshipClass.Data;
 using InternshipClass.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace InternshipClass.Services
 {
@@ -11,19 +12,38 @@ namespace InternshipClass.Services
     {
         private readonly InternDbContext db;
         private readonly List<IAddMemberSubscriber> subscribers;
+        private IConfiguration configuration;
+        private Location defaultLocation;
 
-        public InternshipDbService(InternDbContext db)
+        public InternshipDbService(InternDbContext db, IConfiguration configuration)
         {
             this.db = db;
             subscribers = new List<IAddMemberSubscriber>();
+            this.configuration = configuration;
         }
 
         public Intern AddMember(Intern member)
         {
+            if (member.Location == null)
+            {
+                member.Location = GetDefaultLocation();
+            }
+
             db.Interns.AddRange(member);
             db.SaveChanges();
             subscribers.ForEach(subscriber => subscriber.OnAddMember(member));
             return member;
+        }
+
+        private Location GetDefaultLocation()
+        {
+            if (defaultLocation == null)
+            {
+                var defaultLocationName = configuration["DefaultLocation"];
+                defaultLocation = db.Locations.Where(_ => _.Name == defaultLocationName).OrderBy(_ => _.Id).FirstOrDefault();
+            }
+
+            return defaultLocation;
         }
 
         public void UpdateMember(Intern intern)
