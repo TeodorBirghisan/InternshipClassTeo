@@ -1,4 +1,5 @@
 ﻿using InternshipClass.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace InternshipClass.Data
     {
         public static void Initialize(InternDbContext context)
         {
-            context.Database.EnsureCreated();
+            context.Database.Migrate();
 
             if (context.Interns.Any())
             {
