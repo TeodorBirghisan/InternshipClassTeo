@@ -1,9 +1,10 @@
+using System;
+using System.Linq;
 using InternshipClass.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
 
 namespace InternshipClass
 {
@@ -12,25 +13,35 @@ namespace InternshipClass
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
+            bool recreateDb = args.Contains("--recreateDb");
 
-            CreateDbIfNotExists(host);
+            InitializeDb(host, recreateDb);
 
             host.Run();
         }
 
-        private static void CreateDbIfNotExists(IHost host)
+        private static void InitializeDb(IHost host, bool recreateDb)
         {
             using (var scope = host.Services.CreateScope())
             {
-                var services = scope.ServiceProvider;
+                var services = scope.ServiceProvider; 
+                var logger = services.GetRequiredService<ILogger<Program>>();
                 try
                 {
                     var context = services.GetRequiredService<InternDbContext>();
+                    var webHostEnviroment = services.GetRequiredService<IWebHostEnvironment>();
+                    if (webHostEnviroment.IsDevelopment() && recreateDb)
+                    {
+                        logger.LogDebug("User required to recreate Database.");
+                        context.Database.EnsureDeleted();
+                        context.Database.EnsureCreated();
+                        logger.LogWarning("The Database is recreated");
+                    }
+
                     SeedData.Initialize(context);
                 }
                 catch (Exception ex)
                 {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
                     logger.LogError(ex, "An error occurred creating the DB.");
                 }
             }
