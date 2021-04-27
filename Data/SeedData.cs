@@ -67,6 +67,20 @@ namespace InternshipClass.Data
                 context.Projects.AddRange(projects);
                 context.SaveChanges();
             }
+
+            if (!context.Employees.Any())
+            {
+                var employees = new Employee[]
+                {
+                    new Employee { Id = 1, FirstName = "Teodor", LastName="Birghisan", Email="birghisanteodor@yahoo.com", Gender="Masculin", Birthdate= DateTime.Parse("1999-05-07"), Picture="pic.jpg" },
+                    new Employee { Id = 2, FirstName = "Teodor", LastName="Birghisan", Email="birghisanteodor@yahoo.com", Gender="Masculin", Birthdate= DateTime.Parse("1999-05-07") , Picture="pic.jpg" },
+                    new Employee { Id = 3, FirstName = "Teodor", LastName ="Birghisan", Email="birghisanteodor@yahoo.com", Gender="Masculin", Birthdate= DateTime.Parse("1999-05-07") , Picture="pic.jpg" },
+                };
+
+                context.Employees.AddRange(employees);
+
+                context.SaveChanges();
+            }
         }
     }
 }
