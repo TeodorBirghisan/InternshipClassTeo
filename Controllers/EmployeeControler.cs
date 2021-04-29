@@ -32,9 +32,10 @@ namespace InternshipClass.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] Employee employee)
+        public Employee Post([FromBody] Employee employee)
         {
             employeeDbService.AddEmployee(employee);
+            return employee;
         }
     }
 }
