@@ -37,5 +37,11 @@ namespace InternshipClass.Controllers
             employeeDbService.AddEmployee(employee);
             return employee;
         }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            employeeDbService.RemoveEmployee(id);
+        }
     }
 }

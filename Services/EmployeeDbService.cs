@@ -36,5 +36,17 @@ namespace InternshipClass.Services
             var employees = db.Employees.ToList();
             return employees;
         }
+
+        public void RemoveEmployee(int id)
+        {
+            var employee = GetEmployeeById(id);
+            if (employee == null)
+            {
+                return;
+            }
+
+            db.Remove<Employee>(employee);
+            db.SaveChanges();
+        }
     }
 }
