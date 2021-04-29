@@ -1,9 +1,9 @@
-﻿using InternshipClass.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InternshipClass.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace InternshipClass.Data
 {
@@ -72,9 +72,9 @@ namespace InternshipClass.Data
             {
                 var employees = new Employee[]
                 {
-                    new Employee { Id = 1, FirstName = "Teodor", LastName="Birghisan", Email="birghisanteodor@yahoo.com", Gender="Masculin", Birthdate= DateTime.Parse("1999-05-07"), Picture="pic.jpg" },
-                    new Employee { Id = 2, FirstName = "Teodor", LastName="Birghisan", Email="birghisanteodor@yahoo.com", Gender="Masculin", Birthdate= DateTime.Parse("1999-05-07") , Picture="pic.jpg" },
-                    new Employee { Id = 3, FirstName = "Teodor", LastName ="Birghisan", Email="birghisanteodor@yahoo.com", Gender="Masculin", Birthdate= DateTime.Parse("1999-05-07") , Picture="pic.jpg" },
+                    new Employee { FirstName = "Teodor", LastName="Birghisan", Email="birghisanteodor@yahoo.com", Gender="Masculin", Birthdate= DateTime.Parse("1999-05-07"), Picture="pic.jpg" },
+                    new Employee { FirstName = "Teodor", LastName="Birghisan", Email="birghisanteodor@yahoo.com", Gender="Masculin", Birthdate= DateTime.Parse("1999-05-07") , Picture="pic.jpg" },
+                    new Employee { FirstName = "Teodor", LastName ="Birghisan", Email="birghisanteodor@yahoo.com", Gender="Masculin", Birthdate= DateTime.Parse("1999-05-07") , Picture="pic.jpg" },
                 };
 
                 context.Employees.AddRange(employees);
